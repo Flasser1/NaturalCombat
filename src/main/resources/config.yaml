@@ -1,0 +1,26 @@
+#This is the config file
+#In here you will find all settings that are in the plugin.
+#You can edit all of these settings to your liking.
+
+#In each segment you can find information on what it does.
+
+
+EnvironmentalCombat: false
+#This setting, is about wether the victim should be put into combat, if the attacker is not a player.
+#Which means, if the attacker is environmental. e.g. mobs, fall damage, fire, other types of non-player damage.
+
+SelfCombat: true
+#Should the player be put in combat, if they hit themselves?
+#If the shoot themselves with a bow, or other ways attack oneself.
+
+BaseCombat: 15
+#For exactly how long should the player be put in combat.
+#How many seconds should the combat last?
+
+AnnounceCombatDeaths: false
+#Should the server announce whenever a player dies from logging out whilst in combat?
+#It'll broadcast a message that can be edited in the messages.yaml file
+
+Commands:
+  - 'spawn'
+#This is a list of all the commands, that the player cannot use once in combat.
