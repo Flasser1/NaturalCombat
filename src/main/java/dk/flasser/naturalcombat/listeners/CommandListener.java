@@ -1,6 +1,7 @@
 package dk.flasser.naturalcombat.listeners;
 
 import dk.flasser.naturalcombat.NaturalCombat;
+import dk.flasser.naturalcombat.managers.FileManager;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import java.util.List;
 public class CommandListener implements Listener {
     @Inject
     private NaturalCombat instance;
+    private FileManager fileManager;
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {
@@ -27,7 +29,8 @@ public class CommandListener implements Listener {
             if (!(player.hasMetadata("combat"))) return;
 
             e.setCancelled(true);
-            player.sendMessage("You are not allowed to use this command.");
+            player.sendMessage(fileManager.getMessage("command_disallowed")
+                    .replace("{command}", e.getMessage().split(" ")[0].substring(1).toLowerCase()));
         }
     }
 }

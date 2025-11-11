@@ -1,6 +1,7 @@
 package dk.flasser.naturalcombat.listeners;
 
 import dk.flasser.naturalcombat.NaturalCombat;
+import dk.flasser.naturalcombat.managers.FileManager;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class QuitListener implements Listener {
     @Inject
     private NaturalCombat instance;
+    private FileManager fileManager;
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
@@ -23,7 +25,8 @@ public class QuitListener implements Listener {
         player.setHealth(0);
 
         if (instance.getConfig().getBoolean("AnnounceCombatDeaths")) {
-            Bukkit.broadcastMessage("Combat Død");
+            Bukkit.broadcastMessage(fileManager.getMessage("death_broadcast")
+                    .replace("{player}", player.getName()));
         }
     }
 }

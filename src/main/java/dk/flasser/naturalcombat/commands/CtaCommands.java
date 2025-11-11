@@ -36,47 +36,73 @@ public class CtaCommands {
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.reload"})
     @Executor(pattern = "reload")
     public void reload(Player sender) {
-        sender.sendMessage("Reloading configs...");
         instance.reloadConfig();
         fileManager.createMessages();
-        fileManager.createData();
-        sender.sendMessage("Configs reloaded!");
+        sender.sendMessage(fileManager.getMessage("reload_success"));
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.delete"})
     @Executor(pattern = "delete <player>")
     public void delete(Player sender, @Arg("player") Player target) {
+        if (!target.isOnline()) {
+            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            return;
+        }
+
         target.removeMetadata("combat", instance);
-        sender.sendMessage("Deleted player: " + target.getName());
+        sender.sendMessage(fileManager.getMessage("delete_success").replace("{player}", target.getName()));
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.status"})
     @Executor(pattern = "status <player>")
     public void status(Player sender, @Arg("player") Player target) {
-        sender.sendMessage(sender.getName()+": " + metadataUtil.getMetadata(target, "combat"));
+        if (!target.isOnline()) {
+            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            return;
+        }
+
+        sender.sendMessage(target.hasMetadata("combat")
+                ? fileManager.getMessage("status_success_true").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat")))
+                : fileManager.getMessage("status_success_false").replace("{player}", target.getName())
+        );
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.add"})
     @Executor(pattern = "add <player> <time>")
     public void add(Player sender, @Arg("player") Player target, @Arg("time") Integer time) {
+        if (!target.isOnline()) {
+            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            return;
+        }
+
         Integer combat = (Integer) metadataUtil.getMetadata(target, "combat");
         setCombatUtil.setCombat(target, combat+time);
-        sender.sendMessage("Added time: " + target.getName());
+        sender.sendMessage(fileManager.getMessage("add_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.remove"})
     @Executor(pattern = "remove <player> <time>")
     public void remove(Player sender, @Arg("player") Player target, @Arg("time") Integer time) {
+        if (!target.isOnline()) {
+            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            return;
+        }
+
         Integer combat = (Integer) metadataUtil.getMetadata(target, "combat");
         setCombatUtil.setCombat(target, combat-time);
-        sender.sendMessage("Removed time: " + target.getName());
+        sender.sendMessage(fileManager.getMessage("remove_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.set"})
     @Executor(pattern = "set <player> <time>")
     public void set(Player sender, @Arg("player") Player target, @Arg("time") Integer time) {
+        if (!target.isOnline()) {
+            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            return;
+        }
+
         setCombatUtil.setCombat(target, time);
-        sender.sendMessage("Set time: " + target.getName());
+        sender.sendMessage(fileManager.getMessage("set_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
     }
 
     @Completion(arg = "time", value = "time")

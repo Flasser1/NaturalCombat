@@ -1,6 +1,7 @@
 package dk.flasser.naturalcombat.ulility;
 
 import dk.flasser.naturalcombat.NaturalCombat;
+import dk.flasser.naturalcombat.managers.FileManager;
 import dk.flasser.naturalcombat.ulility.misc.ActionbarUtil;
 import dk.flasser.naturalcombat.ulility.misc.MetadataUtil;
 
@@ -13,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class SetCombatUtil {
     @Inject
     private NaturalCombat instance;
+    private FileManager fileManager;
     private MetadataUtil metadataUtil;
     private ActionbarUtil actionbarUtil;
 
@@ -34,11 +36,12 @@ public class SetCombatUtil {
 
                 if (combat <= 0) {
                     player.removeMetadata("combat", instance);
-                    actionbarUtil.sendActionBar(player, "Combat Gone");
+                    actionbarUtil.sendActionBar(player, fileManager.getMessage("combat_expired"));
                     cancel();
                 }
 
-                actionbarUtil.sendActionBar(player, "Combat Set");
+                actionbarUtil.sendActionBar(player, fileManager.getMessage("combat_timer")
+                        .replace("{time}", String.valueOf(time)));
 
                 player.setMetadata("combat", new FixedMetadataValue(instance, combat - 1));
             }

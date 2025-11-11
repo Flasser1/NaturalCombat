@@ -48,22 +48,7 @@ public class FileManager {
         }
 
         messages = new YamlConfiguration();
-        try (InputStreamReader reader = new InputStreamReader(new FileInputStream(messagesFile), StandardCharsets.UTF_8)) {
-            messages.load(reader);
-        } catch (IOException | InvalidConfigurationException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Async
-    public void createData() {
-        messagesFile = new File(instance.getDataFolder(), "data.yml");
-        if (!messagesFile.exists()) {
-            instance.saveResource("data.yml", false);
-        }
-
-        messages = new YamlConfiguration();
-        try (InputStreamReader reader = new InputStreamReader(new FileInputStream(messagesFile), StandardCharsets.UTF_8)) {
+        try (InputStreamReader reader = new InputStreamReader(  new FileInputStream(messagesFile), StandardCharsets.UTF_8)) {
             messages.load(reader);
         } catch (IOException | InvalidConfigurationException e) {
             throw new RuntimeException(e);

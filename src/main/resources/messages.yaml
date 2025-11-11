@@ -1,0 +1,28 @@
+#This is the messages file
+#In here you will find all messages that the plugin can send.
+#You can edit all of these messages to your liking.
+
+#In each segment you can find information on what it contains.
+#But you can also find information on what placeholders you can use there!
+
+#Information messages
+command_disallowed: "&7(&c!&7) &fThe command &c{command} &fcannot be used whilst in &ccombat"
+death_broadcast: "&7(&c!&7) &fThe player &c{player} &fhas died from logging whilst in &ccombat"
+
+#Timer messages
+combat_expired: "&7(&c!&7) &fYour &ccombatlog &fhas expired"
+combat_timer: "&7(&c!&7) &fYou are in &ccombat &7({time})"
+
+#Command messages
+combat_true: "&7(&c!&7) &fYou are in &ccombat &ffor &c{time}s"
+combat_false: "&7(&c!&7) &fYou are not in &ccombat"
+
+#Admin command stuff
+reload_success: "&7(&c!&7) &fYou have successfully reloaded the configs"
+delete_success: "&7(&c!&7) &fYou have successfully deleted &c{player}&f's combat time"
+status_success_true: "&7(&c!&7) &fThe player {&cplayer} &fis in &ccombat &ffor &c{time}s"
+status_success_false: "&7(&c!&7) &fThe player &c{player} &fis not in &ccombat"
+add_success: "&7(&c!&7) &fYou have successfully added &c{time} &fto &c{player}&f's combat time"
+remove_success: "&7(&c!&7) &fYou have successfully removed &c{time} &ffrom &c{player}&f's combat time"
+set_success: "&7(&c!&7) &fYou have successfully set &c{player}&f's combat time to &c{time}s"
+player_not_online: "&7(&c!&7) &fThe player &c{player} &cis not online, and therefore cannot have a &ccombat time"

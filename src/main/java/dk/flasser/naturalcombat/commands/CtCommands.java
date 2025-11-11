@@ -1,6 +1,6 @@
 package dk.flasser.naturalcombat.commands;
 
-import dk.flasser.naturalcombat.NaturalCombat;
+import dk.flasser.naturalcombat.managers.FileManager;
 import dk.flasser.naturalcombat.ulility.misc.MetadataUtil;
 import eu.okaeri.commands.annotation.Command;
 import eu.okaeri.commands.annotation.Executor;
@@ -17,11 +17,14 @@ import org.bukkit.entity.Player;
 )
 public class CtCommands {
     @Inject
-    private NaturalCombat instance;
+    private FileManager fileManager;
     private MetadataUtil metadataUtil;
 
     @Executor(pattern = "")
     public void defaultCommand(Player sender) {
-        sender.sendMessage("Combat Things");
+        sender.sendMessage(sender.hasMetadata("combat")
+                ? fileManager.getMessage("combat_true").replace("{time}", String.valueOf(metadataUtil.getMetadata(sender, "combat")))
+                : fileManager.getMessage("combat_false")
+        );
     }
 }
