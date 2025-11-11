@@ -25,7 +25,7 @@ public final class NaturalCombat extends OkaeriBukkitPlugin {
         saveDefaultConfig();
         fileManager.createMessages();
 
-        int pluginId = 26996;
+        int pluginId = 25000;
         Metrics metrics = new Metrics(this, pluginId);
     }
 

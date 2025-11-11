@@ -10,6 +10,7 @@ import eu.okaeri.commands.annotation.Completion;
 import eu.okaeri.commands.annotation.Executor;
 import eu.okaeri.commands.bukkit.annotation.Async;
 import eu.okaeri.commands.bukkit.annotation.Permission;
+import eu.okaeri.commands.service.CommandService;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.entity.Player;
@@ -21,7 +22,7 @@ import org.bukkit.entity.Player;
         aliases = {"cta", "ctadmin", "combata"}
 )
 @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta"})
-public class CtaCommands {
+public class CtaCommands implements CommandService {
     @Inject
     private NaturalCombat instance;
     private FileManager fileManager;

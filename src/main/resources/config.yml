@@ -19,7 +19,7 @@ BaseCombat: 15
 
 AnnounceCombatDeaths: false
 #Should the server announce whenever a player dies from logging out whilst in combat?
-#It'll broadcast a message that can be edited in the messages.yaml file
+#It'll broadcast a message that can be edited in the messages.yml file
 
 Commands:
   - 'spawn'
