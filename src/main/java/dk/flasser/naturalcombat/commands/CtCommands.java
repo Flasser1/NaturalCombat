@@ -8,6 +8,7 @@ import eu.okaeri.commands.bukkit.annotation.Async;
 import eu.okaeri.commands.service.CommandService;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Async
@@ -19,12 +20,14 @@ import org.bukkit.entity.Player;
 public class CtCommands implements CommandService {
     @Inject
     private FileManager fileManager;
+    @Inject
     private MetadataUtil metadataUtil;
 
     @Executor(pattern = "")
-    public void defaultCommand(Player sender) {
-        sender.sendMessage(sender.hasMetadata("combat")
-                ? fileManager.getMessage("combat_true").replace("{time}", String.valueOf(metadataUtil.getMetadata(sender, "combat")))
+    public void defaultCommand(CommandSender sender) {
+        Player player = (Player) sender;
+        sender.sendMessage(player.hasMetadata("combat")
+                ? fileManager.getMessage("combat_true").replace("{time}", String.valueOf(metadataUtil.getMetadata(player, "combat")))
                 : fileManager.getMessage("combat_false")
         );
     }

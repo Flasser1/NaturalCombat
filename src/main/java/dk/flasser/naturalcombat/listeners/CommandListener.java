@@ -15,6 +15,7 @@ import java.util.List;
 public class CommandListener implements Listener {
     @Inject
     private NaturalCombat instance;
+    @Inject
     private FileManager fileManager;
 
     @EventHandler

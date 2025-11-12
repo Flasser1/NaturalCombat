@@ -11,7 +11,7 @@ death_broadcast: "&7(&c!&7) &fThe player &c{player} &fhas died from logging whil
 
 #Timer messages
 combat_expired: "&7(&c!&7) &fYour &ccombatlog &fhas expired"
-combat_timer: "&7(&c!&7) &fYou are in &ccombat &7({time})"
+combat_timer: "&7(&c!&7) &fYou are in &ccombat &7({time})s"
 
 #Command messages
 combat_true: "&7(&c!&7) &fYou are in &ccombat &ffor &c{time}s"

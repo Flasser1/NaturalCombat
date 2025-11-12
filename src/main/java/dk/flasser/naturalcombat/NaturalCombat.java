@@ -9,7 +9,7 @@ import eu.okaeri.platform.core.plan.ExecutionPhase;
 import eu.okaeri.platform.core.plan.Planned;
 import org.bstats.bukkit.Metrics;
 
-@Scan(exclusions = "me.reb4ck.tutorial.libs", deep = true)
+@Scan(deep = true)
 public final class NaturalCombat extends OkaeriBukkitPlugin {
     @Inject
     private FileManager fileManager;
@@ -18,12 +18,16 @@ public final class NaturalCombat extends OkaeriBukkitPlugin {
 
     @Planned(ExecutionPhase.STARTUP)
     public void onStartup() {
-        this.getLogger().info("NATURALCOMBAT: STARTUP");
+        getLogger().info("NATURALCOMBAT: STARTING UP");
 
         instance = this;
-
         saveDefaultConfig();
+    }
+
+    @Planned(ExecutionPhase.POST_SETUP)
+    public void afterSetup() {
         fileManager.createMessages();
+        getLogger().info("NATURALCOMBAT: Messages file loaded.");
 
         int pluginId = 25000;
         Metrics metrics = new Metrics(this, pluginId);

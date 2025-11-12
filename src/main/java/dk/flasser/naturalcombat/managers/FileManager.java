@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 @Component
+@Async
 public class FileManager {
     @Inject
     private NaturalCombat instance;

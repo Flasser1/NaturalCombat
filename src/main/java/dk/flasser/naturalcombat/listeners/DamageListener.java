@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class DamageListener implements Listener {
     @Inject
     private NaturalCombat instance;
+    @Inject
     private SetCombatUtil setCombatUtil;
 
     @EventHandler(priority = EventPriority.LOW)

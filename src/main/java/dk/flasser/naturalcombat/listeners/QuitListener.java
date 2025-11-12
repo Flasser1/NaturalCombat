@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class QuitListener implements Listener {
     @Inject
     private NaturalCombat instance;
+    @Inject
     private FileManager fileManager;
 
     @EventHandler
