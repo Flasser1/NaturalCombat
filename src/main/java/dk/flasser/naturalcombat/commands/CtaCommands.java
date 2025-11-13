@@ -15,6 +15,7 @@ import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 
 @Component
 @Async
@@ -99,7 +100,7 @@ public class CtaCommands implements CommandService {
             fileManager.getMessage("combat_false");
             return;
         }
-        setCombatUtil.setCombat(target, combat-time);
+        target.setMetadata("combat", new FixedMetadataValue(instance, combat-time));
         sender.sendMessage(fileManager.getMessage("remove_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
     }
 
@@ -111,7 +112,12 @@ public class CtaCommands implements CommandService {
             return;
         }
 
-        setCombatUtil.setCombat(target, time);
+        if (metadataUtil.getMetadata(target, "combat") == null) {
+            setCombatUtil.setCombat(target, time);
+        } else {
+            target.setMetadata("combat", new FixedMetadataValue(instance, time));
+        }
+
         sender.sendMessage(fileManager.getMessage("set_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
     }
 
