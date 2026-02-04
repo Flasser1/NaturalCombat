@@ -11,16 +11,13 @@ import org.bstats.bukkit.Metrics;
 
 @Scan(deep = true)
 public final class NaturalCombat extends OkaeriBukkitPlugin {
-    @Inject
-    private FileManager fileManager;
 
-    public NaturalCombat instance;
+    private @Inject FileManager fileManager;
 
     @Planned(ExecutionPhase.STARTUP)
     public void onStartup() {
         getLogger().info("NATURALCOMBAT: STARTING UP");
 
-        instance = this;
         saveDefaultConfig();
     }
 
