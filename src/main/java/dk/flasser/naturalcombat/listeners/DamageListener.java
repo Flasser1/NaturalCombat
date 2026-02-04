@@ -3,7 +3,6 @@ package dk.flasser.naturalcombat.listeners;
 import dk.flasser.naturalcombat.NaturalCombat;
 import dk.flasser.naturalcombat.ulility.SetCombatUtil;
 
-import eu.okaeri.commands.bukkit.annotation.Async;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.entity.Player;
@@ -14,13 +13,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 @Component
 public class DamageListener implements Listener {
-    @Inject
-    private NaturalCombat instance;
-    @Inject
-    private SetCombatUtil setCombatUtil;
+
+    private @Inject NaturalCombat instance;
+    private @Inject SetCombatUtil setCombatUtil;
 
     @EventHandler(priority = EventPriority.LOW)
-    @Async
     public void onDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
 

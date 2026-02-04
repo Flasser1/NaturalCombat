@@ -18,10 +18,9 @@ import org.bukkit.entity.Player;
         aliases = {"combat", "combattime", "cttime", "combatt"}
 )
 public class CtCommands implements CommandService {
-    @Inject
-    private FileManager fileManager;
-    @Inject
-    private MetadataUtil metadataUtil;
+
+    private @Inject FileManager fileManager;
+    private @Inject MetadataUtil metadataUtil;
 
     @Executor(pattern = "")
     public void defaultCommand(CommandSender sender) {

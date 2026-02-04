@@ -2,7 +2,6 @@ package dk.flasser.naturalcombat.managers;
 
 import dk.flasser.naturalcombat.NaturalCombat;
 
-import eu.okaeri.commands.bukkit.annotation.Async;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -16,32 +15,27 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 @Component
-@Async
 public class FileManager {
-    @Inject
-    private NaturalCombat instance;
+
+    private @Inject NaturalCombat instance;
 
     private static File messagesFile;
     private static FileConfiguration messages;
 
-    @Async
     public FileConfiguration getMessages() {
         return messages;
     }
 
-    @Async
     public String getMessage(String path) {
         return messages.getString(path).replace("&", "§");
     }
 
-    @Async
     public String[] getListMessage(String path) {
         return messages.getStringList(path).stream()
                 .map(s -> s.replace("&", "§"))
                 .toArray(String[]::new);
     }
 
-    @Async
     public void createMessages() {
         messagesFile = new File(instance.getDataFolder(), "messages.yml");
         if (!messagesFile.exists()) {

@@ -13,10 +13,9 @@ import java.util.List;
 
 @Component
 public class CommandListener implements Listener {
-    @Inject
-    private NaturalCombat instance;
-    @Inject
-    private FileManager fileManager;
+
+    private @Inject NaturalCombat instance;
+    private @Inject FileManager fileManager;
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {

@@ -5,7 +5,6 @@ import dk.flasser.naturalcombat.managers.FileManager;
 import dk.flasser.naturalcombat.ulility.misc.ActionbarUtil;
 import dk.flasser.naturalcombat.ulility.misc.MetadataUtil;
 
-import eu.okaeri.commands.bukkit.annotation.Async;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.Bukkit;
@@ -14,18 +13,13 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 @Component
-@Async
 public class SetCombatUtil {
-    @Inject
-    private NaturalCombat instance;
-    @Inject
-    private FileManager fileManager;
-    @Inject
-    private MetadataUtil metadataUtil;
-    @Inject
-    private ActionbarUtil actionbarUtil;
 
-    @Async
+    private @Inject NaturalCombat instance;
+    private @Inject FileManager fileManager;
+    private @Inject MetadataUtil metadataUtil;
+    private @Inject ActionbarUtil actionbarUtil;
+
     public void setCombat(Player player, Integer time) {
         if (player.hasMetadata("combat")) {
             Bukkit.broadcastMessage("1");

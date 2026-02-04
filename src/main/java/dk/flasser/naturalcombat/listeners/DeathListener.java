@@ -10,8 +10,8 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 @Component
 public class DeathListener implements Listener {
-    @Inject
-    private NaturalCombat instance;
+
+    private @Inject NaturalCombat instance;
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {

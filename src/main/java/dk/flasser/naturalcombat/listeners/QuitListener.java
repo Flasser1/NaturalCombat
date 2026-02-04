@@ -12,10 +12,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 @Component
 public class QuitListener implements Listener {
-    @Inject
-    private NaturalCombat instance;
-    @Inject
-    private FileManager fileManager;
+
+    private @Inject NaturalCombat instance;
+    private @Inject FileManager fileManager;
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {

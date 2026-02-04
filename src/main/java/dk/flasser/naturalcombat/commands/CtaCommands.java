@@ -7,6 +7,7 @@ import dk.flasser.naturalcombat.ulility.misc.MetadataUtil;
 
 import eu.okaeri.commands.annotation.Arg;
 import eu.okaeri.commands.annotation.Command;
+import eu.okaeri.commands.annotation.Context;
 import eu.okaeri.commands.annotation.Executor;
 import eu.okaeri.commands.bukkit.annotation.Async;
 import eu.okaeri.commands.bukkit.annotation.Permission;
@@ -14,7 +15,6 @@ import eu.okaeri.commands.service.CommandService;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.injector.annotation.PostConstruct;
 import eu.okaeri.platform.core.annotation.Component;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -29,14 +29,11 @@ import java.util.List;
 )
 @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta"})
 public class CtaCommands implements CommandService {
-    @Inject
-    private NaturalCombat instance;
-    @Inject
-    private FileManager fileManager;
-    @Inject
-    private MetadataUtil metadataUtil;
-    @Inject
-    private SetCombatUtil setCombatUtil;
+    
+    private @Inject NaturalCombat instance;
+    private @Inject FileManager fileManager;
+    private @Inject MetadataUtil metadataUtil;
+    private @Inject SetCombatUtil setCombatUtil;
 
     private final List<SubCommand> subCommands = new ArrayList<>();
 
@@ -51,47 +48,47 @@ public class CtaCommands implements CommandService {
     }
 
     @Executor(pattern = "")
-    public void defaultCommand(CommandSender sender) {
-        sender.sendMessage(new String[]{"&8[ &c&lCombat &f&lSystem &8]", ""});
+    public void _def(@Context Player player) {
+        player.sendMessage(new String[]{"&8[ &c&lCombat &f&lSystem &8]", ""});
         for (SubCommand sub : subCommands) {
-            if (sender.hasPermission("naturalcombat.cta." + sub.getPerm())
-                    || sender.hasPermission("naturalcombat.cta.*")
-                    || sender.hasPermission("naturalcombat.*")
-                    || sender.hasPermission("naturalstuff.*")) {
-                sender.sendMessage("§8│ §f/" + sub.getUsage() + " §8›› §7" + sub.getDescription());
+            if (player.hasPermission("naturalcombat.cta." + sub.getPerm())
+                    || player.hasPermission("naturalcombat.cta.*")
+                    || player.hasPermission("naturalcombat.*")
+                    || player.hasPermission("naturalstuff.*")) {
+                player.sendMessage("§8│ §f/" + sub.getUsage() + " §8›› §7" + sub.getDescription());
             }
         }
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.reload"})
     @Executor(pattern = "reload")
-    public void reload(CommandSender sender) {
+    public void reload(@Context Player player) {
         instance.reloadConfig();
         fileManager.createMessages();
-        sender.sendMessage(fileManager.getMessage("reload_success"));
+        player.sendMessage(fileManager.getMessage("reload_success"));
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.delete"})
     @Executor(pattern = "delete <player>")
-    public void delete(CommandSender sender, @Arg("player") Player target) {
+    public void delete(@Context Player player, @Arg("player") Player target) {
         if (!target.isOnline()) {
-            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            player.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
             return;
         }
 
         target.removeMetadata("combat", instance);
-        sender.sendMessage(fileManager.getMessage("delete_success").replace("{player}", target.getName()));
+        player.sendMessage(fileManager.getMessage("delete_success").replace("{player}", target.getName()));
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.status"})
     @Executor(pattern = "status <player>")
-    public void status(CommandSender sender, @Arg("player") Player target) {
+    public void status(@Context Player player, @Arg("player") Player target) {
         if (!target.isOnline()) {
-            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            player.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
             return;
         }
 
-        sender.sendMessage(target.hasMetadata("combat")
+        player.sendMessage(target.hasMetadata("combat")
                 ? fileManager.getMessage("status_success_true").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat")))
                 : fileManager.getMessage("status_success_false").replace("{player}", target.getName())
         );
@@ -99,23 +96,23 @@ public class CtaCommands implements CommandService {
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.add"})
     @Executor(pattern = "add <player> <time>")
-    public void add(CommandSender sender, @Arg("player") Player target, @Arg("time") Integer time) {
+    public void add(@Context Player player, @Arg("player") Player target, @Arg("time") Integer time) {
         if (!target.isOnline()) {
-            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            player.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
             return;
         }
 
         Integer combat = (Integer) metadataUtil.getMetadata(target, "combat");
         if (combat == null) combat = 0;
         setCombatUtil.setCombat(target, combat+time);
-        sender.sendMessage(fileManager.getMessage("add_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
+        player.sendMessage(fileManager.getMessage("add_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.remove"})
     @Executor(pattern = "remove <player> <time>")
-    public void remove(CommandSender sender, @Arg("player") Player target, @Arg("time") Integer time) {
+    public void remove(@Context Player player, @Arg("player") Player target, @Arg("time") Integer time) {
         if (!target.isOnline()) {
-            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            player.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
             return;
         }
 
@@ -125,14 +122,14 @@ public class CtaCommands implements CommandService {
             return;
         }
         target.setMetadata("combat", new FixedMetadataValue(instance, combat-time));
-        sender.sendMessage(fileManager.getMessage("remove_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
+        player.sendMessage(fileManager.getMessage("remove_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
     }
 
     @Permission({"naturalstuff.*", "naturalcombat.*", "naturalcombat.cta.*", "naturalcombat.cta.set"})
     @Executor(pattern = "set <player> <time>")
-    public void set(CommandSender sender, @Arg("player") Player target, @Arg("time") Integer time) {
+    public void set(@Context Player player, @Arg("player") Player target, @Arg("time") Integer time) {
         if (!target.isOnline()) {
-            sender.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
+            player.sendMessage(fileManager.getMessage("player_not_online").replace("{player}", target.getName()));
             return;
         }
 
@@ -142,7 +139,7 @@ public class CtaCommands implements CommandService {
             target.setMetadata("combat", new FixedMetadataValue(instance, time));
         }
 
-        sender.sendMessage(fileManager.getMessage("set_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
+        player.sendMessage(fileManager.getMessage("set_success").replace("{player}", target.getName()).replace("{time}", String.valueOf(metadataUtil.getMetadata(target, "combat"))));
     }
 
     public class SubCommand {
